@@ -10,6 +10,7 @@ public class ShortestSubArray {
         int right = 0;
         int value = 0;
         while(right < nums.length){
+
             value += nums[right];
             while(value >= target){
                 //移动左边指针
