@@ -34,28 +34,31 @@ public class LRUCache {
             //如果存在，移动到最远删除的位置
             cache.addRecently(key, value);
         } else {
-            if (cache.getSize() == capacity) {
+            if (map.size() == capacity) {
                 //删除最早访问的节点
-                cache.removeFirst();
-                Cache c = cache.head.next;
+                Cache c = cache.removeFirst();
+                //LRU缓存中删除cache对象之后，在map中删除
                 map.remove(c.key);
             }
             map.put(key, map.get(key));
-            Cache n = new Cache(key, value);
-            cache.addLast(n);
+            cache.addRecently(key, value);
         }
     }
 
 
-    class Cache{
+    class Cache {
         private Cache pre;
         private Cache next;
         public int key;
         public int value;
 
-        public Cache(int k,int v){
+        public Cache(int k, int v) {
             this.key = k;
             this.value = v;
+        }
+
+        public int getValue() {
+            return this.value;
         }
     }
 
@@ -65,19 +68,14 @@ public class LRUCache {
         private Cache tail;
         private int size;
 
-        public DoubleList(){
-            Cache head = new Cache(0,-1);
-            Cache tail = new Cache(0,-1);
+        public DoubleList() {
+            Cache head = new Cache(0, -1);
+            Cache tail = new Cache(0, -1);
             head.next = tail;
             tail.pre = head;
             head.pre = null;
             tail.next = null;
             this.size = 0;
-        }
-
-
-        public int getSize(){
-            return this.size;
         }
 
         public void remove(Cache x) {
@@ -86,8 +84,8 @@ public class LRUCache {
             size--;
         }
 
-        public Cache removeFirst(){
-            if(head.next == tail){
+        public Cache removeFirst() {
+            if (head.next == tail) {
                 return null;
             }
             Cache node = head.next;
@@ -99,29 +97,13 @@ public class LRUCache {
             return node;
         }
 
-
-        // 在链表尾部添加节点 x，时间 O(1)
-        public void addLast(Cache x) {
-            x.pre = tail.pre;
-            x.next = tail;
-            tail.pre.next = x;
-            tail.pre = x;
-            size++;
-        }
-
-
-        private void moveToLatestRecently(int key) {
-            Cache x = map.get(key);
+        private void addRecently(int key, int val) {
+            Cache c = new Cache(key, val);
             // 先从链表中删除这个节点
-            cache.remove(x);
+            cache.remove(c);
             // 重新插到队尾
-            cache.addLast(x);
-        }
-
-        private void addRecently(int key,int val){
-            Cache c = new Cache(key,val);
-            cache.moveToLatestRecently(key);
-            map.put(key,c);
+            cache.addRecently(key, c.getValue());
+            map.put(key, c);
         }
     }
 }
