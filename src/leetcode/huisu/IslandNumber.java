@@ -27,8 +27,6 @@ public class IslandNumber {
             }
         }
         return cnt;
-
-
     }
 
 
@@ -49,6 +47,25 @@ public class IslandNumber {
         if (j + 1 <= grid[0].length - 1 && visited[i][j + 1] == 0 && grid[i][j + 1] == '1') {
             dfs(grid, visited, i, j + 1);
         }
-
     }
+
+
+    public void dfsGrid(char[][] grid, int i, int j) {
+        int row = grid.length;
+        int col = grid[0].length;
+        if (i < 0 || i >= row || j < 0 || j >= col) {
+            return;
+        }
+        grid[i][j] = '0';
+
+        dfsGrid(grid, i - 1, j);
+
+        dfsGrid(grid, i + 1, j);
+
+        dfsGrid(grid, i, j - 1);
+
+        dfsGrid(grid, i, j + 1);
+    }
+
+
 }
