@@ -1,5 +1,6 @@
 package leetcode.sort;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class KPeakSort {
@@ -11,7 +12,7 @@ public class KPeakSort {
      */
     public int[] peakK(int [] array, int k){
         int []result = new int[k];
-        PriorityQueue<Integer> heap = new PriorityQueue<>((o1,o2) -> o1 - o2);
+        PriorityQueue<Integer> heap = new PriorityQueue<>(Comparator.comparingInt(o -> o));
         for(int i = 0; i< array.length; i++){
             heap.add(array[i]);
         }

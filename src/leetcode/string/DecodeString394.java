@@ -6,44 +6,55 @@ public class DecodeString394 {
 
     public static String decodeString(String s) {
         Stack<Character> st = new Stack<>();
-        String result ="";
-        for(int i=0; i < s.length(); i++){
-            if(s.charAt(i) != ']'){
-                st.push(s.charAt(i));
-            }else{
+        int index = 0;
+        int length = s.length();
+        while (index < length) {
+            if (s.charAt(index) != ']') {
+                st.push(s.charAt(index));
+            } else {
                 StringBuilder sb = new StringBuilder();
-                while(st.size() > 0){
-                    char ch = st.peek();
-                    st.pop();
-                    if(ch >= '1' && ch <= '9'){
-                        int loop = ch - '0';
-                        for(int k=0; k< loop; k++){
-                            sb = sb.append(sb);
-                        }
-                    }else if(ch >= 'a' && ch <= 'z'){
+                while (!st.isEmpty() && st.peek() != '[') {
+                    while (st.peek() >= 'a' && st.peek() <= 'z') {
+                        char ch = st.peek();
+                        st.pop();
                         sb.append(ch);
-                    }else {
-                        if(st.size() > 0){
-                            result = sb.toString();
-                            char[] cArray = result.toCharArray();
-                            for (char c : cArray) {
-                                st.push(c);
-                            }
-                        }else{
-                            return result;
-                        }
+                    }
+                }
+                if (!st.isEmpty()) {
+                    st.pop();
+                    sb.reverse();
+                    StringBuilder sCount = new StringBuilder();
+                    while (!st.isEmpty() && st.peek() >= '0' && st.peek() <= '9') {
+                        sCount.append(st.peek());
+                        st.pop();
+                    }
+                    int loop = 0;
+                    if (!sCount.toString().isEmpty()) {
+                        sCount.reverse();
+                        loop = Integer.parseInt(sCount.toString());
                     }
 
-
+                    for (int i = 0; i < loop; i++) {
+                        for (int k = 0; k < sb.toString().length(); k++) {
+                            st.push(sb.toString().charAt(k));
+                        }
+                    }
                 }
+                //说明是 ‘【’
             }
+            index++;
         }
-        return "";
+
+        StringBuilder res = new StringBuilder();
+        while (!st.isEmpty()) {
+            res.append(st.pop());
+        }
+        return res.reverse().toString();
     }
 
 
     public static void main(String[] args) {
-        String str = "3[a]2[bc]";
+        String str = "3[a2[c]]";
         System.out.println(decodeString(str));
     }
 }

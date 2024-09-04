@@ -38,4 +38,28 @@ public class AllStringCombinationsDemo {
             res.remove(res.get(res.size() - 1));
         }
     }
+
+
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> tmp = new ArrayList<>();
+        dfsNumber(0, tmp, result, nums);
+        return result;
+    }
+    public void dfsNumber(int index, List<Integer> tmp, List<List<Integer>> res, int []nums) {
+        if(tmp.size() == nums.length ){
+            if(!res.contains(tmp)) {
+                res.add(tmp);
+            }
+            return;
+        }
+        for (int k = index; k < nums.length; k++) {
+            dfsNumber(index + 1, tmp, res, nums);
+            tmp.add(nums[index]);
+            dfsNumber(index + 1, tmp, res, nums);
+            //减支回到上一步
+            tmp.remove(tmp.get(tmp.size() - 1));
+        }
+
+    }
 }
