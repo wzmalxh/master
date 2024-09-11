@@ -24,7 +24,7 @@ public class IpAddressConvert {
         if (tmp.size() == 4 && index == s.length()) {
             result.add(construct(tmp));
         }
-        for (int i = index + 1; i <= index + 3 && i <= s.length(); i++) {
+        for (int i = index + 1; i <= s.length(); i++) {
             String str = s.substring(index, i);
             int value = Integer.parseInt(str);
             //需要排除 01 这种情况
@@ -51,7 +51,7 @@ public class IpAddressConvert {
     }
 
     public static void main(String[] args) {
-        String s = "010010";
+        String s = "101023";
         ArrayList<String> result = restoreIpAddresses(s);
         for(int i=0; i< result.size(); i++){
             System.out.println(result.get(i));
