@@ -1,5 +1,7 @@
 package leetcode.shuzu;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
 
 public class TemperatureDemo {
@@ -8,7 +10,14 @@ public class TemperatureDemo {
      */
 
     public static void main(String[] args) {
-        int[] arr = {72,73,74,71,71,72,76,73};
+        int[] arr = {73,74,75,71,69,72,76,73};
+        Set<Integer> st = new HashSet<>();
+        st.add(5);
+        st.add(6);
+        st.add(8);
+        for(Integer s: st) {
+            System.out.println(s);
+        }
         TemperatureDemo d = new TemperatureDemo();
         int []res = d.highTemperatureDate(arr);
         for(int i=0; i< res.length; i++){

@@ -46,6 +46,7 @@ public class GraphConnectivity {
 
     public static void main(String[] args) {
         String[][] edges = {{"a", "b"}, {"b", "c"}, {"c", "d"}, {"e", "f"}};
+        int []n = {0};
         GraphConnectivity graph = new GraphConnectivity(edges);
         System.out.println(graph.isConnected("a", "d")); // 输出: true
         System.out.println(graph.isConnected("a", "e")); // 输出: false
