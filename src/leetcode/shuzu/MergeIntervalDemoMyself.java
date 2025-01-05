@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class MergeIntervalDemoMyself {
-    public int[][] merge(int[][] intervals){
+    public static int[][] merge(int[][] intervals){
         Arrays.sort(intervals, new Comparator<int[]>() {
             @Override
             public int compare(int[] o1, int[] o2) {
@@ -27,5 +27,26 @@ public class MergeIntervalDemoMyself {
         }
 
         return resultMergeList.toArray(new int[resultMergeList.size()][]);
+    }
+    public static void main(String[] args) {
+        int[][] array = {
+                {1, 3},
+                {2, 6},
+                {8,10},
+                {15,18}
+        };
+        int[][] array2 = {
+                {1, 4},
+                {0, 2},
+                {3, 5}
+        };
+        int[][] res = merge(array);
+        for (int i = 0; i < res.length; i++) {
+            for (int j = 0; j <= 1; j++) {
+                System.out.print(res[i][j]+",");
+            }
+            System.out.println();
+        }
+
     }
 }

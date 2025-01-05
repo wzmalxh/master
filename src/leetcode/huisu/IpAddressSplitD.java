@@ -1,26 +1,41 @@
 package leetcode.huisu;
 
-
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class IpAddressSplit {
-    public static List<String> ipAddressSplit(String str){
-        /**
-         * 如果队列是空，直接返回
-         */
-        if (str == null || str.length() ==0) {
-            return Collections.emptyList();
-        }
-        int len = 0;
+public class IpAddressSplitD {
+    public static String[] restoreIpAddresses(String s) {
         List<String> result = new ArrayList<>();
-       dfs(new ArrayList<>(),len, str,result);
-       return result;
+        dfsIpAddress(0,s,result,new ArrayList<>());
+        //dfs(result,0,s,new ArrayList<>());
+        return  result.toArray(new String[0]);
     }
 
-    //加入到结果集的函数需要满足两个条件： 1. 结果集大小等于4 2. 长度计量len 等于字符串长度 （没有多余的字符）
+    public static void dfsIpAddress(int index, String str, List<String> result, List<String> tmp) {
+        if(tmp.size() > 4) {
+            return;
+        }
+        if(tmp.size() == 4 && index == str.length()) {
+            String resTmp = convertToResult(tmp);
+            result.add(resTmp);
+        }
+        for(int i= index+1; i<= index+3 && i <= str.length(); i++) {
+            //截取字符串，转换为数字判断，合适则进入递归
+            String t = str.substring(index, i);
+            int value = Integer.parseInt(t);
+            if (t.length() > 1 && t.charAt(0) == '0') {
+                //排除 01，02的这种情况
+                break;
+            }
+            if(value >=0 && value <= 255) {
+                tmp.add(t);
+                dfsIpAddress(i, str,result,tmp);
+                tmp.remove(tmp.size()-1);
+            }
+        }
+    }
+
+
     private static void dfs(List<String> resultIp, int len, String str, List<String> result) {
         if (resultIp.size() > 4) {
             return;
@@ -55,11 +70,14 @@ public class IpAddressSplit {
         return sb.toString();
     }
 
+
+
     public static void main(String[] args) {
         String adr = "25525511135";
-        List<String> res = ipAddressSplit(adr);
-        for(int i=0; i< res.size(); i++){
-            System.out.println(res.get(i));
+        String[] res = restoreIpAddresses(adr);
+        for(int i=0; i< res.length; i++){
+            System.out.println(res[i]);
         }
     }
+
 }

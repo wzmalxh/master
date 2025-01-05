@@ -1,6 +1,7 @@
 package optional;
 
 import java.util.Optional;
+import java.util.PriorityQueue;
 
 public class OptionalDemo {
     static class User {
@@ -24,7 +25,11 @@ public class OptionalDemo {
 
     public static void main(String[] args) {
             User user = new User("wang","2875650822@qq.com");
-            Optional.ofNullable(user).ifPresent(u -> System.out.println("User is:" + u.getEmail())
+            Optional.ofNullable(user)
+                    .ifPresent(u -> System.out.println("User is:" + u.getEmail())
         );
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>((o1, o2) -> (o1-o2));
+
     }
 }

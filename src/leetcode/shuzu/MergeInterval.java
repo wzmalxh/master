@@ -10,9 +10,9 @@ public class MergeInterval {
         Arrays.sort(intervals, (o1, o2) -> o1[0] - o2[0]);
         List<int[]> resultIntervals = new ArrayList<>();
         int index = 0;
-        while (index < intervals.length-1) {
-            for (int k = index + 1; k < intervals.length;k++ ) {
-                while ( k < intervals.length && intervals[index][1] >= intervals[k][0]) {
+        while (index < intervals.length - 1) {
+            for (int k = index + 1; k < intervals.length; k++) {
+                while (k < intervals.length && intervals[index][1] >= intervals[k][0]) {
                     //说明可以进行区间的合并
                     intervals[index][1] = Math.max(intervals[k][1], intervals[index][1]);
                     k++;
@@ -24,7 +24,7 @@ public class MergeInterval {
         }
         if (index < intervals.length) {
             //说明还差最后一个元素没有添加
-            resultIntervals.add(intervals[intervals.length-1]);
+            resultIntervals.add(intervals[intervals.length - 1]);
         }
 
         //最后将结果集转换为二维数组
